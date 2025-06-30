@@ -92,7 +92,6 @@
                     <div id="layers-container"></div>
                 </div>
                 <div class="p-4 border-t space-y-2">
-                     <button id="export-draw-btn" class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300"><i class="fa-solid fa-download mr-2"></i>Exportar Desenhos</button>
                      <button id="print-map-btn" class="w-full bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300"><i class="fa-solid fa-print mr-2"></i>Imprimir Mapa</button>
                     <button id="fit-bounds-btn" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"><i class="fa-solid fa-expand mr-2"></i>Ver todo o município</button>
                     <button id="about-btn" class="w-full bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300"><i class="fa-solid fa-info-circle mr-2"></i>Sobre</button>
@@ -134,7 +133,7 @@
             
             // --- CONTROLE DE CAMADAS ---
             const baseMaps = { "<span class='font-medium'>Mapa de Ruas</span>": osmLayer, "<span class='font-medium'>Imagem de Satélite</span>": satelliteLayer };
-            const layerControl = L.control.layers(baseMaps, {}, { collapsed: false }).addTo(map);
+            const layerControl = L.control.layers(baseMaps, {}, { collapsed: false, hideSingleBase: true }).addTo(map);
             document.getElementById('layers-container').appendChild(layerControl.getContainer());
             
             // --- FERRAMENTAS E INTERATIVIDADE ---
@@ -153,15 +152,13 @@
             // CAMADAS PERMANENTES
             // ==============================================================================================
 
-            // --- Limite Municipal Genérico ---
             let limiteMunicipal;
             const limiteMunicipal_GeoJSON = {"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[-55.05382256100001,-22.298311306000016],[-55.05251971600002,-22.30927379099998],[-55.04006837700004,-22.312390088000047],[-55.01964304599996,-22.332962468000034],[-55.01817683699998,-22.33885296199996],[-55.007984677999964,-22.343714619],[-54.992679191,-22.344769313],[-54.982278628,-22.340222963999974],[-54.976641967000035,-22.35034321800003],[-54.985354798,-22.357339749],[-54.973858322000034,-22.364031268],[-54.96165579300003,-22.36331119299996],[-54.95387524699998,-22.370654750999957],[-54.94572666600005,-22.371480390000013],[-54.937378371,-22.362841225000018],[-54.929520109999984,-22.37641560099996],[-54.910809009000026,-22.376302413000033],[-54.912061141000024,-22.388136546000013],[-54.89930757,-22.38660806800003],[-54.890388283000036,-22.377184138000022],[-54.876312448,-22.386132879000034],[-54.851627764,-22.38873376200003],[-54.84283969000004,-22.395695262999986],[-54.827372348,-22.395279216999985],[-54.821411426000026,-22.398206882999972],[-54.81426186699995,-22.388099978999957],[-54.804920378999974,-22.39002559699995],[-54.800706740999985,-22.397739795],[-54.78370086699998,-22.400069804000026],[-54.78271946799999,-22.408227416999953],[-54.76113188899997,-22.42488708699996],[-54.745981457999974,-22.41545532999996],[-54.732160527,-22.42536001799999],[-54.738982002999975,-22.434397190999988],[-54.72183896600004,-22.441250644000032],[-54.718282272,-22.433600914000014],[-54.705903024,-22.434531435],[-54.692858693,-22.43002067299995],[-54.69188735699996,-22.42480782599994],[-54.667209215000014,-22.419334162000013],[-54.65097800200005,-22.428504778],[-54.64597279500002,-22.436125186999956],[-54.633208642,-22.435136355999983],[-54.624772316000026,-22.417673058],[-54.609501465,-22.41017755200003],[-54.57714224600002,-22.40585269199997],[-54.576774819999976,-22.394316765999957],[-54.591847749000046,-22.383647723000013],[-54.63539621399998,-22.367148740999962],[-54.64235659899997,-22.352777212999953],[-54.56639288800005,-22.293985717999977],[-54.55491298600002,-22.302673349999978],[-54.530180862,-22.317692418000025],[-54.532002484,-22.33142769600002],[-54.52964992099999,-22.33891428399998],[-54.518986060000024,-22.348847498],[-54.51279279199996,-22.346703455000025],[-54.488880158000036,-22.346165697999986],[-54.476077958,-22.336766039000036],[-54.462604361,-22.338506611000035],[-54.457735175,-22.335088358999975],[-54.44490936699998,-22.345358782999945],[-54.43773399,-22.345520650999976],[-54.440752963000044,-22.327135921],[-54.43303659099996,-22.324507963000013],[-54.425685674999976,-22.32892273499998],[-54.40571207699995,-22.317532171000025],[-54.399345966000034,-22.301383444999964],[-54.39269712700004,-22.30023482899997],[-54.38221190299997,-22.28482188599999],[-54.38250735600003,-22.27166681799998],[-54.36274615300003,-22.262907400999957],[-54.36051429499996,-22.256777919],[-54.316538869,-22.25097070799997],[-54.316824287,-22.243451739],[-54.306560253,-22.233321991],[-54.301705591999955,-22.222262238000013],[-54.28946825900003,-22.218318442],[-54.29080534399998,-22.21262036100003],[-54.282355018,-22.202722419000022],[-54.26867971600002,-22.194531628],[-54.264053793999956,-22.181155017999956],[-54.274911493,-22.179406888999985],[-54.26030723299996,-22.164418992000012],[-54.26467535700003,-22.154574450000027],[-54.249896591,-22.15643182999999],[-54.24773633399998,-22.147864254000012],[-54.238299804,-22.145619061999984],[-54.227489597,-22.138198536000026],[-54.22417730099998,-22.130513227000023],[-54.227586384000034,-22.124419672],[-54.239628848999985,-22.12228815599997],[-54.24117876,-22.10656689299998],[-54.23957373700003,-22.090163175999955],[-54.242443721999955,-22.082351384000017],[-54.22956352799998,-22.068119921],[-54.22462163600003,-22.050179444],[-54.215524923999986,-22.038147618000018],[-54.215789418,-22.02519825999997],[-54.20722884000002,-22.019969515],[-54.205271319000026,-22.008721617999964],[-54.211157761999985,-21.998725904],[-54.220761898999974,-21.995454365999965],[-54.21924216200005,-21.98337129799998],[-54.230871581000024,-21.972252341],[-54.230297,-21.95733017999999],[-54.236937512,-21.95116452200002],[-54.24626791000003,-21.953589773000015],[-54.25223735999999,-21.961716373000044],[-54.269799857999985,-21.957582762999984],[-54.27251279199997,-21.96576047299998],[-54.282619730999954,-21.952391898999988],[-54.281592263,-21.934493043000014],[-54.30296003900002,-21.939730187000023],[-54.308573502000044,-21.933754207999986],[-54.328023057,-21.936755736999974],[-54.33013253399998,-21.946455785],[-54.343211066000016,-21.945440555000015],[-54.349675695,-21.94850656799998],[-54.36339448300004,-21.947107851000027],[-54.37837590199999,-21.93771688899997],[-54.381076797,-21.931153087],[-54.39012100800003,-21.93217123299997],[-54.40128405300001,-21.927582612999956],[-54.40893921599998,-21.934237567],[-54.42408570500003,-21.924552802000022],[-54.435841811,-21.924382664000017],[-54.435965968,-21.915077316000033],[-54.429568395999986,-21.90310421799997],[-54.445147714999955,-21.903059127],[-54.46098678300004,-21.897200244000025],[-54.463570987,-21.891232259],[-54.473860846000015,-21.892938451],[-54.482398480999954,-21.902554109000015],[-54.496108694000036,-21.909044382000026],[-54.497004874,-21.941700461999975],[-54.50404360099998,-21.95464855899996],[-54.50844891700001,-21.99609630900003],[-54.51514289199998,-22.01863659200003],[-54.528401126,-22.02832272999997],[-54.53517524700004,-22.050546673000024],[-54.543298443,-22.056208274999968],[-54.54788926099996,-22.089547287999967],[-54.555040406999964,-22.103029603],[-54.571886894999956,-22.114570568999984],[-54.580166229,-22.12977171199996],[-54.59218275700005,-22.116238105],[-54.596526693,-22.119593762999944],[-54.61407929899996,-22.100114257],[-54.625377864000015,-22.092456248],[-54.639724743999984,-22.101513553999947],[-54.656290886000015,-22.092524323000013],[-54.67956725500004,-22.094389998000015],[-54.683993344,-22.066717483],[-54.691467879,-22.069666495000014],[-54.697779346,-22.078918153],[-54.69765930399996,-22.08648427700001],[-54.706189251,-22.097415152000014],[-54.71875761500002,-22.09804422799997],[-54.729896254000025,-22.106144352],[-54.745422714000014,-22.113486664000025],[-54.75863625899996,-22.128982800999943],[-54.77246411400005,-22.13907714000004],[-54.82866514000002,-22.17436215699998],[-54.836764351,-22.171060108999953],[-54.840205206,-22.181608298000032],[-54.87088456799999,-22.200869025999985],[-54.876077276999986,-22.19873341300003],[-54.92206851400005,-22.192560297999965],[-54.937350980999966,-22.187798342999983],[-54.95585871100002,-22.177169277],[-54.978929058,-22.151694898],[-55.017198033000035,-22.141686414999974],[-55.023099034000026,-22.125285624999982],[-55.042072795999985,-22.10477622500002],[-55.05166843699998,-22.103236593],[-55.07056955299997,-22.115990757],[-55.091684634,-22.122022776],[-55.09542667,-22.110484538999984],[-55.08790832300004,-22.095618590999976],[-55.086404952999956,-22.07318691699997],[-55.09748143900004,-22.05854922600002],[-55.100305109,-22.042058285999968],[-55.10545201099997,-22.034554930999963],[-55.09949356800002,-22.005606302],[-55.08403361899997,-21.985529059000015],[-55.06408852,-21.974683386000027],[-55.037322824000036,-21.970308550000016],[-55.023620127,-21.964435259999966],[-55.01668990399996,-21.952343052999947],[-55.01522489300002,-21.942091310999956],[-55.00885886700003,-21.93738497699996],[-55.021416598,-21.92072969599998],[-55.021579869000014,-21.916107548000014],[-55.00704401700004,-21.897550868],[-55.011231797000036,-21.88700561999997],[-55.018286261000014,-21.886319896999943],[-55.033989153,-21.898988674],[-55.043747442000026,-21.89457638200003],[-55.05411315299999,-21.90016654300001],[-55.072568107999956,-21.90164015],[-55.089785865,-21.908513525999968],[-55.102924157,-21.905109130999975],[-55.133751827999966,-21.917324568000037],[-55.160423160000036,-21.92133528400004],[-55.17258697599998,-21.913411920000026],[-55.193518691,-21.914655112999956],[-55.20269341599996,-21.91910326799998],[-55.22733595999996,-21.925893246000026],[-55.24251581400002,-21.924695168],[-55.25419455199997,-21.91981862599997],[-55.269165974,-21.918016291000026],[-55.279383411999966,-21.912237632999968],[-55.28883740200001,-21.91147736899996],[-55.28950908300002,-21.904637920999956],[-55.300459723000046,-21.905279657],[-55.31566973700004,-21.89690643399995],[-55.349757177999955,-21.89384813199996],[-55.36078277999997,-21.88188526200002],[-55.36944468,-21.88000994099998],[-55.377903147,-21.888979466],[-55.39340455100001,-21.893734598000027],[-55.40424290299996,-21.889686706],[-55.42278122300005,-21.902050761999966],[-55.432645518999976,-21.92844560899996],[-55.438351577000034,-21.936623108000024],[-55.454562526,-21.946248730000015],[-55.46123856700003,-21.947041125999977],[-55.477615427999986,-21.955762285000027],[-55.48488523300002,-21.962350168999976],[-55.48728781999997,-21.971800984],[-55.523222314000016,-21.984212701000015],[-55.514055413999984,-21.999225360999976],[-55.51164700699997,-22.01315056700002],[-55.499090327,-22.034948409000023],[-55.502620470000025,-22.039152424],[-55.50116520899997,-22.051734465000024],[-55.49563259600003,-22.062601790000013],[-55.49779691299997,-22.096396408999976],[-55.49379694300003,-22.10272619099998],[-55.49269271299996,-22.11927345],[-55.478341017999966,-22.126385052],[-55.46441315599995,-22.125935544000033],[-55.45723676699995,-22.13815311199996],[-55.446897380999964,-22.148161956],[-55.424334839999965,-22.142508424],[-55.42121592900004,-22.149625921000027],[-55.410154076,-22.15499771],[-55.39199956900004,-22.145605433],[-55.38605019699995,-22.161682328000026],[-55.376254536,-22.166937306000023],[-55.383978939000016,-22.174805863999982],[-55.37754393900003,-22.18813084399997],[-55.370275462000045,-22.193611768],[-55.37221494500005,-22.209876003999973],[-55.35661157199998,-22.202945030000024],[-55.34492236999998,-22.206121406],[-55.342697112,-22.19874285600001],[-55.332802768999976,-22.204960479],[-55.31196553500004,-22.194574784],[-55.28542728899998,-22.192968302000047],[-55.27869227699997,-22.200706992],[-55.273387896999985,-22.21687769200002],[-55.26164172000004,-22.218520954999963],[-55.252243503000045,-22.227223395],[-55.24796694400001,-22.222571666],[-55.23497331200005,-22.225323384000028],[-55.213450002000044,-22.22316892],[-55.20862345000001,-22.22640488300003],[-55.203711870000014,-22.241606015],[-55.19001201599998,-22.244803970000042],[-55.18375895900002,-22.233710507999966],[-55.16837734199996,-22.232117098999975],[-55.16153909899995,-22.223303689000023],[-55.149411622999985,-22.22372817099998],[-55.13605935999998,-22.233498027999964],[-55.129276181,-22.233494452000016],[-55.12702971699997,-22.242919578],[-55.10192173100003,-22.24941443599998],[-55.10226611900004,-22.257782153000026],[-55.095540486000026,-22.262765718999947],[-55.07828745899999,-22.263577996999963],[-55.07084482400002,-22.271689983999956],[-55.07011185899997,-22.28608941199999],[-55.06064744900004,-22.28966693000003],[-55.05382256100001,-22.298311306000016]]]}};
             limiteMunicipal = L.geoJSON(limiteMunicipal_GeoJSON, { style: { color: '#e60000', weight: 3, fillOpacity: 0.05 } }).bindPopup('Limite Municipal');
             addPermanentLayer(limiteMunicipal, 'Limite Municipal', limiteMunicipal_GeoJSON, 'limite_municipal');
-            map.fitBounds(limiteMunicipal.getBounds()); // Centraliza o mapa na camada
+            map.fitBounds(limiteMunicipal.getBounds());
             document.getElementById('fit-bounds-btn').addEventListener('click', () => { if (limiteMunicipal) { map.fitBounds(limiteMunicipal.getBounds()); } });
             
-            // --- Unidades de Ensino ---
             const unidadesEnsino_GeoJSON = {"type": "FeatureCollection","features": [{ "type": "Feature", "properties": { "id": 0, "objeto": "E.M.", "denominaca": "ESCOLA MUNICIPAL ETALÍVIO PENZO", "situacao": "LEGISLADO", "link": null, "observacao": null, "xy": null, "dominio": null, "cod_patrim": null, "area_rocag": null, "extensao_v": null, "2_denominaca": "ESCOLA MUNICIPAL PROFESSORA ISABEL CRISTALDO PRADO", "2_NOMES2": "PROFESSORA ISABEL CRISTALDO PRADO", "auxiliary_storage_labeling_positionx": 732138.14945270249, "auxiliary_storage_labeling_positiony": 7539414.6148282494, "auxiliary_storage_callouts_originx": null, "auxiliary_storage_callouts_originy": null, "auxiliary_storage_callouts_destinationx": null, "auxiliary_storage_callouts_destinationy": null }, "geometry": { "type": "Point", "coordinates": [ -54.748777552450441, -22.235498213652626 ] } },
 { "type": "Feature", "properties": { "id": 1, "objeto": "E.M.", "denominaca": "ESCOLA MUNICIPAL DE 1° GRAU JOÃO INÁCIO DE MATOS", "situacao": "LEGISLADO", "link": null, "observacao": null, "xy": null, "dominio": null, "cod_patrim": null, "area_rocag": null, "extensao_v": null, "2_denominaca": null, "2_NOMES2": null, "auxiliary_storage_labeling_positionx": null, "auxiliary_storage_labeling_positiony": null, "auxiliary_storage_callouts_originx": null, "auxiliary_storage_callouts_originy": null, "auxiliary_storage_callouts_destinationx": null, "auxiliary_storage_callouts_destinationy": null }, "geometry": { "type": "Point", "coordinates": [ -54.485989909813789, -22.139673954330753 ] } },
 { "type": "Feature", "properties": { "id": 2, "objeto": "E.M.", "denominaca": "ESCOLA MUNICIPAL DE PRÉ ESCOLAR E 1º GRAU  LOIDE BONFIN ANDRADE", "situacao": "LEGISLADO", "link": null, "observacao": null, "xy": null, "dominio": null, "cod_patrim": null, "area_rocag": null, "extensao_v": null, "2_denominaca": "ESCOLA MUNICIPAL LOIDE BONFIN ANDRADE", "2_NOMES2": "LOIDE BONFIN ANDRADE", "auxiliary_storage_labeling_positionx": 725781.02664955414, "auxiliary_storage_labeling_positiony": 7538574.4843043685, "auxiliary_storage_callouts_originx": null, "auxiliary_storage_callouts_originy": null, "auxiliary_storage_callouts_destinationx": null, "auxiliary_storage_callouts_destinationy": null }, "geometry": { "type": "Point", "coordinates": [ -54.810340015801785, -22.243977663865053 ] } },
@@ -252,10 +249,8 @@
 { "type": "Feature", "properties": { "id": 87, "objeto": "E.M.", "denominaca": "ESCOLA MUNICIPAL DE 1° GRAU FRANKLIN LUIZ AZAMBUJA", "situacao": "LEGISLADO", "link": null, "observacao": null, "xy": null, "dominio": null, "cod_patrim": null, "area_rocag": null, "extensao_v": null, "2_denominaca": "ESCOLA MUNICIPAL FRANKLIN LUIZ AZAMBUJA", "2_NOMES2": "FRANKLIN LUIZ AZAMBUJA", "auxiliary_storage_labeling_positionx": 724835.75969422096, "auxiliary_storage_labeling_positiony": 7537150.5064794552, "auxiliary_storage_callouts_originx": null, "auxiliary_storage_callouts_originy": null, "auxiliary_storage_callouts_destinationx": null, "auxiliary_storage_callouts_destinationy": null }, "geometry": { "type": "Point", "coordinates": [ -54.817976432528191, -22.255074448661592 ] } },
 { "type": "Feature", "properties": { "id": 88, "objeto": "E.M.", "denominaca": "ESCOLA MUNICIPAL PROFESSORA AVANI GARGNELUTTI FEHLAUER", "situacao": "LEGISLADO", "link": null, "observacao": null, "xy": null, "dominio": null, "cod_patrim": null, "area_rocag": null, "extensao_v": null, "2_denominaca": "ESCOLA MUNICIPAL PROFESSORA AVANI GARGNELUTTI FEHLAUER", "2_NOMES2": "PROFESSORA AVANI GARGNELUTTI FEHLAUER", "auxiliary_storage_labeling_positionx": 722819.87486643763, "auxiliary_storage_labeling_positiony": 7540940.9418958593, "auxiliary_storage_callouts_originx": null, "auxiliary_storage_callouts_originy": null, "auxiliary_storage_callouts_destinationx": null, "auxiliary_storage_callouts_destinationy": null }, "geometry": { "type": "Point", "coordinates": [ -54.8371922270182, -22.224596358909679 ] } },
 { "type": "Feature", "properties": { "id": 89, "objeto": "E.M.", "denominaca": "Escola Municipal Rotary Dr. Nelson de Araujo", "situacao": null, "link": null, "observacao": null, "xy": null, "dominio": null, "cod_patrim": null, "area_rocag": null, "extensao_v": null, "2_denominaca": "ESCOLA MUNICIPAL ROTARY DR. NELSON DE ARAUJO", "2_NOMES2": "ROTARY DR. NELSON DE ARAUJO", "auxiliary_storage_labeling_positionx": null, "auxiliary_storage_labeling_positiony": null, "auxiliary_storage_callouts_originx": null, "auxiliary_storage_callouts_originy": null, "auxiliary_storage_callouts_destinationx": null, "auxiliary_storage_callouts_destinationy": null }, "geometry": { "type": "Point", "coordinates": [ -54.803941830342531, -22.222297806884448 ] } }
-]
-};
+]};
             
-            // Filtra as features para criar camadas separadas
             const escolasFeatures = unidadesEnsino_GeoJSON.features.filter(f => f.properties.objeto === 'E.M.');
             const ceimsFeatures = unidadesEnsino_GeoJSON.features.filter(f => f.properties.objeto === 'CEIM');
             
@@ -274,16 +269,8 @@
             });
             addPermanentLayer(camadaCEIMs, "<i class='fa-solid fa-child text-purple-700 mr-2'></i>CEIMs", ceimsGeoJSON, 'ceims');
             
-            /*
-            // --- Camada de Lixo (Permanente) ---
-            const lixoPermanente_GeoJSON = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":null},"geometry":{"type":"Point","coordinates":[-54.791581,-22.230795]}},{"type":"Feature","properties":{"id":null},"geometry":{"type":"Point","coordinates":[-54.791562,-22.23077]}}]};
-            const camadaLixoPermanente = L.geoJSON(lixoPermanente_GeoJSON, {
-                pointToLayer: (feature, latlng) => L.marker(latlng, { icon: createIcon('fa-solid fa-trash-can', '#5c4033') }),
-                onEachFeature: (feature, layer) => { layer.bindPopup("<b>Ponto de Coleta</b>"); }
-            });
-            addPermanentLayer(camadaLixoPermanente, "<i class='fa-solid fa-trash-can text-yellow-800 mr-2'></i>Pontos de Lixo", lixoPermanente_GeoJSON, 'pontos_lixo');
-            */
             // --- 8. FERRAMENTAS AVANÇADAS ---
+            
             document.getElementById('print-map-btn').addEventListener('click', function () {
                 const printElements = document.getElementById('print-elements');
                 const legendContainer = document.getElementById('print-legend');
@@ -301,7 +288,6 @@
             window.addEventListener('afterprint', () => { document.getElementById('print-elements').style.visibility = 'hidden'; });
             
             const drawnItems = new L.FeatureGroup();
-            map.addLayer(drawnItems);
             addPermanentLayer(drawnItems, "<i class='fa-solid fa-pencil text-red-500 mr-2'></i>Camada de Desenho", null, 'meus_desenhos');
             const drawControl = new L.Control.Draw({
                 position: 'topright', edit: { featureGroup: drawnItems },
@@ -367,46 +353,57 @@
             function addPermanentLayer(layer, name, geojsonData, filename) {
                 layerControl.addOverlay(layer, name);
                 
-                const originalAddLayer = layerControl._addLayer;
-                layerControl._addLayer = function(layer, name, overlay) {
-                    originalAddLayer.call(this, layer, name, overlay);
-                    if (overlay) {
-                        const layerLabel = Array.from(this._overlaysList.getElementsByTagName('label')).find(label => label.textContent.trim().includes(name.replace(/<[^>]*>/g, '').trim()));
-                        if (layerLabel && !layerLabel.querySelector('.layer-options-btn')) {
-                            const optionsBtn = document.createElement('span');
-                            optionsBtn.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
-                            optionsBtn.className = 'layer-options-btn';
-                            
-                            const dropdown = document.createElement('div');
-                            dropdown.className = 'layer-dropdown';
-                            let finalGeojsonData = geojsonData;
-                            if (!finalGeojsonData && layer.toGeoJSON) {
-                                finalGeojsonData = layer.toGeoJSON();
-                            }
-                            
-                            dropdown.innerHTML = `<a href="#" class="export-geojson">Exportar GeoJSON</a><a href="#" class="export-csv">Exportar CSV</a>`;
+                // CORREÇÃO: Observa o controle de camadas para adicionar os menus quando estiverem prontos
+                const observer = new MutationObserver((mutationsList, obs) => {
+                     for (const mutation of mutationsList) {
+                        if (mutation.type === 'childList') {
+                            const labels = document.querySelectorAll('.leaflet-control-layers-overlays label');
+                            labels.forEach(label => {
+                                const span = label.querySelector('span');
+                                if (span && span.innerHTML.includes(name.replace(/'/g, '"')) && !label.querySelector('.layer-options-btn')) {
+                                    const optionsBtn = document.createElement('span');
+                                    optionsBtn.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
+                                    optionsBtn.className = 'layer-options-btn';
+                                    
+                                    const dropdown = document.createElement('div');
+                                    dropdown.className = 'layer-dropdown';
+                                    let dataToExport = geojsonData;
+                                    if (layer === drawnItems) {
+                                        dropdown.innerHTML = `<a href="#" class="export-geojson">Exportar GeoJSON</a>`;
+                                    } else {
+                                        dropdown.innerHTML = `<a href="#" class="export-geojson">Exportar GeoJSON</a><a href="#" class="export-csv">Exportar CSV</a>`;
+                                    }
 
-                            layerLabel.appendChild(optionsBtn);
-                            optionsBtn.appendChild(dropdown);
+                                    label.appendChild(optionsBtn);
+                                    optionsBtn.appendChild(dropdown);
 
-                            optionsBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'; };
-                            dropdown.querySelector('.export-geojson').onclick = (e) => { e.stopPropagation(); downloadFile(JSON.stringify(finalGeojsonData, null, 2), `${filename}.geojson`, 'application/json'); dropdown.style.display = 'none'; };
-                            dropdown.querySelector('.export-csv').onclick = (e) => { e.stopPropagation(); downloadCSV(finalGeojsonData, `${filename}.csv`); dropdown.style.display = 'none'; };
+                                    optionsBtn.onclick = (e) => { e.stopPropagation(); e.preventDefault(); dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'; };
+                                    dropdown.querySelector('.export-geojson').onclick = (e) => { e.stopPropagation(); 
+                                        if (layer === drawnItems) { dataToExport = drawnItems.toGeoJSON(); }
+                                        downloadFile(JSON.stringify(dataToExport, null, 2), `${filename}.geojson`, 'application/json'); 
+                                        dropdown.style.display = 'none'; 
+                                    };
+                                    
+                                    const csvExporter = dropdown.querySelector('.export-csv');
+                                    if (csvExporter) {
+                                        csvExporter.onclick = (e) => {
+                                            e.stopPropagation();
+                                            downloadCSV(dataToExport, `${filename}.csv`);
+                                            dropdown.style.display = 'none';
+                                        };
+                                    }
+                                }
+                            });
                         }
                     }
-                };
+                });
+                observer.observe(layerControl.getContainer(), { childList: true, subtree: true });
             }
 
             map.on('click', () => { document.querySelectorAll('.layer-dropdown').forEach(d => d.style.display = 'none'); });
             
-            document.getElementById('export-draw-btn').addEventListener('click', () => {
-                if (drawnItems.getLayers().length === 0) { alert("Não há desenhos para exportar."); return; }
-                downloadFile(JSON.stringify(drawnItems.toGeoJSON()), 'meus_desenhos.geojson', 'application/json');
-            });
-
-            const aboutModal = document.getElementById('about-modal');
-            document.getElementById('about-btn').addEventListener('click', () => aboutModal.style.display = 'flex');
-            document.getElementById('close-modal-btn').addEventListener('click', () => aboutModal.style.display = 'none');
+            document.getElementById('about-btn').addEventListener('click', () => document.getElementById('about-modal').style.display = 'flex');
+            document.getElementById('close-modal-btn').addEventListener('click', () => document.getElementById('about-modal').style.display = 'none');
         });
     </script>
 </body>
